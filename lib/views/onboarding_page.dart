@@ -3,6 +3,8 @@ import 'package:onboarding_screen/app_styles.dart';
 import 'package:onboarding_screen/model/onboard_data.dart';
 import 'package:onboarding_screen/size_configs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/my_text_button.dart';
+import '../widgets/onboard_nav_btn.dart';
 import './pages.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -166,57 +168,5 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 }
 
-class OnBoardNavBtn extends StatelessWidget {
-  const OnBoardNavBtn({Key? key, required this.name, required this.onPressed})
-      : super(key: key);
 
-  final String name;
-  final VoidCallback onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(6),
-        splashColor: Colors.black12,
-        child: Padding(
-          padding: EdgeInsets.all(4.0),
-          child: Text(
-            name,
-            style: kBodyText1,
-          ),
-        ));
-  }
-}
 
-class MyTextButton extends StatelessWidget {
-  const MyTextButton(
-      {Key? key,
-      required this.buttonName,
-      required this.onPressed,
-      required this.bgColor})
-      : super(key: key);
-
-  final String buttonName;
-  final VoidCallback onPressed;
-  final Color bgColor;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: SizedBox(
-        height: SizeConfig.blockSizeH! * 15.5,
-        width: SizeConfig.blockSizeH! * 100,
-        child: TextButton(
-          onPressed: onPressed,
-          child: Text(
-            buttonName,
-            style: kBodyText1,
-          ),
-          style: TextButton.styleFrom(backgroundColor: bgColor),
-        ),
-      ),
-    );
-  }
-}
