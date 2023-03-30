@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './pages.dart';
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:onboarding_screen/app_styles.dart';
 import 'package:onboarding_screen/model/onboard_data.dart';
 import 'package:onboarding_screen/size_configs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './pages.dart';
+
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
 
@@ -25,6 +27,17 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),
     );
   }
+  Future setSeenonboard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // seenOnboard = await prefs.setBool('seenOnboard', true);
+    // this will set seenOnboard to true when running onboard page for first time.
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setSeenonboard();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +55,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 controller: _pageController,
                 onPageChanged: (value) {
                   setState(() {
-                    currentPage == value;
+                    currentPage = value;
                   });
                 },
                 itemCount: onboardingContents.length,
@@ -103,42 +116,55 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               child: Column(
                 children: [
                   currentPage == onboardingContents.length - 1
-                      ? MyTextButton(buttonName: 'Get Started', onPressed: () {
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpPage())
-                        );
-                  }, bgColor: kPrimaryColor,)
+                      ? MyTextButton(
+                          buttonName: 'Get Started',
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpPage(),
+                                ));
+                          },
+                          bgColor: kPrimaryColor,
+                        )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             OnBoardNavBtn(
                               name: 'Skip',
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpPage()));
+                              },
                             ),
                             Row(
-                              children: List.generate(onboardingContents.length,
-                                  (index) => dotIndicator(index)),
+                              children: List.generate(
+                                onboardingContents.length,
+                                (index) => dotIndicator(index),
+                              ),
                             ),
                             OnBoardNavBtn(
-                                name: 'Next',
-                                onPressed: () {
-                                  _pageController.nextPage(
-                                    duration: Duration(milliseconds: 400),
-                                    curve: Curves.easeInOut,
-                                  );
-                                }),
+                              name: 'Next',
+                              onPressed: () {
+                                _pageController.nextPage(
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            )
                           ],
                         ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 }
-
 
 class OnBoardNavBtn extends StatelessWidget {
   const OnBoardNavBtn({Key? key, required this.name, required this.onPressed})
@@ -163,7 +189,12 @@ class OnBoardNavBtn extends StatelessWidget {
 }
 
 class MyTextButton extends StatelessWidget {
-  const MyTextButton({Key? key, required this.buttonName, required this.onPressed, required this.bgColor}) : super(key: key);
+  const MyTextButton(
+      {Key? key,
+      required this.buttonName,
+      required this.onPressed,
+      required this.bgColor})
+      : super(key: key);
 
   final String buttonName;
   final VoidCallback onPressed;
@@ -176,18 +207,16 @@ class MyTextButton extends StatelessWidget {
       ),
       child: SizedBox(
         height: SizeConfig.blockSizeH! * 15.5,
-        width: SizeConfig.blockSizeH! * 100 ,
+        width: SizeConfig.blockSizeH! * 100,
         child: TextButton(
           onPressed: onPressed,
           child: Text(
             buttonName,
             style: kBodyText1,
           ),
-          style: TextButton.styleFrom(
-              backgroundColor: bgColor),
+          style: TextButton.styleFrom(backgroundColor: bgColor),
         ),
       ),
     );
   }
 }
-
