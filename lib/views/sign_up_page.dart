@@ -120,9 +120,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-
-
-
                     //signup screen
                   },
                 )
