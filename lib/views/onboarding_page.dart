@@ -124,7 +124,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SignUpPage(),
+                                  builder: (context) => SignUpPage( ),
                                 ));
                           },
                           bgColor: kPrimaryColor,

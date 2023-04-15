@@ -10,7 +10,7 @@ class OnBoarding {
 
 List<OnBoarding> onboardingContents = [
   OnBoarding(
-    title: 'Welcome to\n Monumental habits',
+    title: 'Welcome to\n Walkin_Wellness',
     image: 'assets/images/onboarding_image_1.png',
   ),
   OnBoarding(
